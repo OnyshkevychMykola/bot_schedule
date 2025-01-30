@@ -13,19 +13,58 @@ bot.setMyCommands([
 
 const isUserAllowed = (chatId) => allowedUsers.includes(chatId);
 
-const startSurvey = async (chatId) => {
-  userSelections[chatId] = {};
-  const msg = await bot.sendMessage(chatId, 'Виберіть тип походу:', {
-    reply_markup: {
-      inline_keyboard: [
+const updateSurveyMessage = async (chatId) => {
+  const { type, duration, season, options = [], lastMessageId } = userSelections[chatId];
+  let message = "*Ваш вибір:*";
+  if (type) message += `\n*Тип подорожі:* ${getOptionName(type)}`;
+  if (duration) message += `\n*Тривалість:* ${getOptionName(duration)}`;
+  if (season) message += `\n*Пора року:* ${getOptionName(season)}`;
+  if (options.length > 0) {
+    message += "\n*Додаткові опції:*\n" + options.map(opt => `- ${getOptionName(opt)}`).join('\n');
+  }
+
+  try {
+    await bot.editMessageText(message, {
+      chat_id: chatId,
+      message_id: lastMessageId,
+      parse_mode: 'Markdown',
+      reply_markup: getReplyMarkup(chatId)
+    });
+  } catch (error) {
+    console.log("Помилка редагування повідомлення:", error);
+  }
+};
+
+const getReplyMarkup = (chatId) => {
+  const { type, duration, season } = userSelections[chatId];
+
+  if (!type) {
+    return { inline_keyboard: [
         [{ text: 'Похід у гори', callback_data: 'hike' }],
         [{ text: 'Поїздка на лижі', callback_data: 'ski' }],
         [{ text: 'Поїздка по містах', callback_data: 'city' }],
-        [{ text: 'Поїздка до коліних батьків', callback_data: 'family' }],
-      ],
-    },
-  });
-  userSelections[chatId].lastMessageId = msg.message_id;
+        [{ text: 'Поїздка до родичів', callback_data: 'family' }],
+      ]};
+  }
+  if (!duration && type !== 'family') {
+    return { inline_keyboard: [
+        [{ text: '1 день', callback_data: 'OneDay' }],
+        [{ text: '2 дні', callback_data: 'TwoDays' }],
+      ]};
+  }
+  if (!season && type !== 'ski') {
+    return { inline_keyboard: [
+        [{ text: 'Літо', callback_data: 'Summer' }],
+        [{ text: 'Зима', callback_data: 'Winter' }],
+      ]};
+  }
+  return { inline_keyboard: [
+      [{ text: 'Баня', callback_data: 'option_bath' }],
+      [{ text: 'Дощ', callback_data: 'option_rain' }],
+      [{ text: 'Палатка', callback_data: 'option_tent' }],
+      [{ text: 'GoPro', callback_data: 'option_gopro' }],
+      [{ text: 'Завершити вибір', callback_data: 'next' }],
+    ]};
 };
 
 bot.onText(/\/start/, async (msg) => {
@@ -34,120 +73,19 @@ bot.onText(/\/start/, async (msg) => {
     return bot.sendMessage(chatId, "🚫 Вам заборонено користуватись цим ботом.");
   }
 
-  await startSurvey(chatId);
+  userSelections[chatId] = {};
+  const msgResponse = await bot.sendMessage(chatId, "Виберіть тип подорожі:", {
+    reply_markup: getReplyMarkup(chatId),
+    parse_mode: 'Markdown'
+  });
+  userSelections[chatId].lastMessageId = msgResponse.message_id;
 });
-
-const getPackingList = (type, duration, season) => {
-  const filteredDuration = type === 'family' ? '' : duration;
-  const filteredSeason = type === 'ski' ? '' : season;
-  const key = `${type}${filteredDuration}${filteredSeason}`;
-  return tripPackingList[key];
-};
-
-function getOptionName(optionKey) {
-  return optionNames[optionKey] || optionKey;
-}
 
 bot.on('callback_query', async (query) => {
   const chatId = query.message.chat.id;
   const data = query.data;
-  const lastMessageId = userSelections[chatId]?.lastMessageId;
 
   if (!userSelections[chatId]) return;
-
-  if (!userSelections[chatId].type) {
-    userSelections[chatId].type = data;
-    await bot.editMessageText(`✅ Ви вибрали: ${query.message.text.split('\n')[0]}\n*${query.message.reply_markup.inline_keyboard.find(row => row[0].callback_data === data)[0].text}*`, {
-      chat_id: chatId,
-      message_id: lastMessageId,
-      parse_mode: 'Markdown',
-    });
-
-    if (data === 'family') {
-      const msg = await bot.sendMessage(chatId, 'Виберіть пору року:', {
-        reply_markup: {
-          inline_keyboard: [
-            [{ text: 'Літо', callback_data: 'Summer' }],
-            [{ text: 'Зима', callback_data: 'Winter' }],
-          ],
-        },
-      });
-      userSelections[chatId].lastMessageId = msg.message_id;
-    } else {
-      const msg = await bot.sendMessage(chatId, 'Виберіть тривалість походу:', {
-        reply_markup: {
-          inline_keyboard: [
-            [{ text: '1 день', callback_data: 'OneDay' }],
-            [{ text: '2 дні', callback_data: 'TwoDays' }],
-          ],
-        },
-      });
-      userSelections[chatId].lastMessageId = msg.message_id;
-    }
-    return;
-  }
-
-  if (!userSelections[chatId].duration && userSelections[chatId].type !== 'family') {
-    if (['OneDay', 'TwoDays'].includes(data)) {
-      userSelections[chatId].duration = data;
-      await bot.editMessageText(`✅ Ви вибрали: ${query.message.text.split('\n')[0]}\n*${query.message.reply_markup.inline_keyboard.find(row => row[0].callback_data === data)[0].text}*`, {
-        chat_id: chatId,
-        message_id: lastMessageId,
-        parse_mode: 'Markdown',
-      });
-
-      if (userSelections[chatId].type === 'ski') {
-        const msg = await bot.sendMessage(chatId, 'Виберіть додаткові опції:', {
-          reply_markup: {
-            inline_keyboard: [
-              [{ text: 'Баня', callback_data: 'option_bath' }],
-              [{ text: 'Дощ', callback_data: 'option_rain' }],
-              [{ text: 'Палатка', callback_data: 'option_tent' }],
-              [{ text: 'GoPro', callback_data: 'option_gopro' }],
-              [{ text: 'Далі', callback_data: 'next' }],
-            ],
-          },
-        });
-        userSelections[chatId].lastMessageId = msg.message_id;
-      } else {
-        const msg = await bot.sendMessage(chatId, 'Виберіть пору року:', {
-          reply_markup: {
-            inline_keyboard: [
-              [{ text: 'Літо', callback_data: 'Summer' }],
-              [{ text: 'Зима', callback_data: 'Winter' }],
-            ],
-          },
-        });
-        userSelections[chatId].lastMessageId = msg.message_id;
-      }
-    }
-    return;
-  }
-
-  if (!userSelections[chatId].season && (userSelections[chatId].type !== 'ski')) {
-    if (['Summer', 'Winter'].includes(data)) {
-      userSelections[chatId].season = data;
-      await bot.editMessageText(`✅ Ви вибрали: ${query.message.text.split('\n')[0]}\n*${query.message.reply_markup.inline_keyboard.find(row => row[0].callback_data === data)[0].text}*`, {
-        chat_id: chatId,
-        message_id: lastMessageId,
-        parse_mode: 'Markdown',
-      });
-
-      const msg = await bot.sendMessage(chatId, 'Виберіть додаткові опції:', {
-        reply_markup: {
-          inline_keyboard: [
-            [{ text: 'Баня', callback_data: 'option_bath' }],
-            [{ text: 'Дощ', callback_data: 'option_rain' }],
-            [{ text: 'Палатка', callback_data: 'option_tent' }],
-            [{ text: 'GoPro', callback_data: 'option_gopro' }],
-            [{ text: 'Далі', callback_data: 'next' }],
-          ],
-        },
-      });
-      userSelections[chatId].lastMessageId = msg.message_id;
-    }
-    return;
-  }
 
   if (data.startsWith('option_')) {
     const option = data.replace('option_', '');
@@ -158,41 +96,44 @@ bot.on('callback_query', async (query) => {
     } else {
       userSelections[chatId].options.push(option);
     }
-    return;
-  }
-
-  if (data === 'next') {
+  } else if (data === 'next') {
     const { type, duration, season, options = [] } = userSelections[chatId];
-    const packingList = getPackingList(type, duration, season);
-    let message = `*${packingList.name}*\n`;
+    const packingList = tripPackingList[`${type}${duration || ''}${season || ''}`] || {};
+    let message = `*${packingList.name || 'Ваш список'}*\n\n`;
 
     ['kolya', 'diana', 'shared'].forEach(group => {
       if (packingList[group]) {
         message += `*${group === 'kolya' ? 'Коля:' : group === 'diana' ? 'Діана:' : 'Разом:'}*\n`;
-        Object.values(packingList[group]).forEach(item => {
-          message += `- ${item}\n`;
-        });
+        message += Object.values(packingList[group]).map(item => `- ${item}`).join('\n') + '\n';
       }
     });
 
     if (options.length > 0) {
-      message += '\n*Додаткові опції:*\n';
-      options.forEach(optionKey => {
-        if (additionalConditions[optionKey]) {
-          message += `*${getOptionName(optionKey)}:*\n`;
-          Object.values(additionalConditions[optionKey]).forEach(item => {
-            message += `- ${item}\n`;
-          });
-        }
-      });
+      message += '\n*Додаткові опції:*\n' + options.map(optionKey => {
+        return additionalConditions[optionKey] ? `*${getOptionName(optionKey)}:*\n` + Object.values(additionalConditions[optionKey]).map(item => `- ${item}`).join('\n') : '';
+      }).join('\n');
     }
 
-    await bot.editMessageText(`✅ Вибір завершено`, {
+    await bot.editMessageText(message, {
       chat_id: chatId,
-      message_id: lastMessageId,
+      message_id: userSelections[chatId].lastMessageId,
+      parse_mode: 'Markdown'
     });
-
-    await bot.sendMessage(chatId, message, { parse_mode: 'Markdown' });
     delete userSelections[chatId];
+    return;
+  } else {
+    if (!userSelections[chatId].type) {
+      userSelections[chatId].type = data;
+    } else if (!userSelections[chatId].duration && userSelections[chatId].type !== 'family') {
+      userSelections[chatId].duration = data;
+    } else if (!userSelections[chatId].season && userSelections[chatId].type !== 'ski') {
+      userSelections[chatId].season = data;
+    }
   }
+
+  await updateSurveyMessage(chatId);
 });
+
+function getOptionName(optionKey) {
+  return optionNames[optionKey] || optionKey;
+}

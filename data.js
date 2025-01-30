@@ -443,7 +443,15 @@ const optionNames = {
   tent: 'Палатка',
   bath: 'Баня',
   rain: 'Дощ',
-  gopro: 'Gopro'
+  gopro: 'Gopro',
+  hike: 'Похід у гори',
+  ski: 'Поїздка на лижі',
+  city: 'Поїздка по містах',
+  family: 'Поїздка до родичів',
+  OneDay: '1 день',
+  TwoDays: '2 дні',
+  Summer: 'Літо',
+  Winter: 'Зима',
 };
 
 module.exports = {
