@@ -230,7 +230,7 @@ const tripPackingList = {
       cookies: "Пачка печива"
     }
   },
-  familyTwoDaysWinter: {
+  familyWinter: {
     name: "Поїздка до батьків Колі 2 дні Зима",
     kolya: {},
     diana: {
@@ -262,7 +262,7 @@ const tripPackingList = {
       condoms: "Презервативи"
     }
   },
-  familyTwoDaysSummer: {
+  familySummer: {
     name: "Поїздка до батьків Колі 2 дні Літо",
     kolya: {},
     diana: {
