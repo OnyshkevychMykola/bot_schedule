@@ -5,10 +5,13 @@ const { tripPackingList, additionalConditions, optionNames } = require('./data')
 const bot = new TelegramApi(process.env.BOT_TOKEN, { polling: true });
 
 const userSelections = {};
+const allowedUsers = process.env.ALLOWED_USERS.split(',').map(id => Number(id.trim()));
 
 bot.setMyCommands([
   { command: '/start', description: 'Почати опитування' },
 ]);
+
+const isUserAllowed = (chatId) => allowedUsers.includes(chatId);
 
 const startSurvey = async (chatId) => {
   userSelections[chatId] = {};
@@ -26,7 +29,12 @@ const startSurvey = async (chatId) => {
 };
 
 bot.onText(/\/start/, async (msg) => {
-  await startSurvey(msg.chat.id);
+  const chatId = msg.chat.id;
+  if (!isUserAllowed(chatId)) {
+    return bot.sendMessage(chatId, "🚫 Вам заборонено користуватись цим ботом.");
+  }
+
+  await startSurvey(chatId);
 });
 
 const getPackingList = (type, duration, season) => {
