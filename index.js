@@ -37,34 +37,40 @@ const updateSurveyMessage = async (chatId) => {
 
 const getReplyMarkup = (chatId) => {
   const { type, duration, season } = userSelections[chatId];
+  let keyboard = [];
 
   if (!type) {
-    return { inline_keyboard: [
-        [{ text: 'Похід у гори', callback_data: 'hike' }],
-        [{ text: 'Поїздка на лижі', callback_data: 'ski' }],
-        [{ text: 'Поїздка по містах', callback_data: 'city' }],
-        [{ text: 'Поїздка до родичів', callback_data: 'family' }],
-      ]};
-  }
-  if (!duration && type !== 'family') {
-    return { inline_keyboard: [
-        [{ text: '1 день', callback_data: 'OneDay' }],
-        [{ text: '2 дні', callback_data: 'TwoDays' }],
-      ]};
-  }
-  if (!season && type !== 'ski') {
-    return { inline_keyboard: [
-        [{ text: 'Літо', callback_data: 'Summer' }],
-        [{ text: 'Зима', callback_data: 'Winter' }],
-      ]};
-  }
-  return { inline_keyboard: [
+    keyboard = [
+      [{ text: 'Похід у гори', callback_data: 'hike' }],
+      [{ text: 'Поїздка на лижі', callback_data: 'ski' }],
+      [{ text: 'Поїздка по містах', callback_data: 'city' }],
+      [{ text: 'Поїздка до родичів', callback_data: 'family' }],
+    ];
+  } else if (!duration && type !== 'family') {
+    keyboard = [
+      [{ text: '1 день', callback_data: 'OneDay' }],
+      [{ text: '2 дні', callback_data: 'TwoDays' }],
+    ];
+  } else if (!season && type !== 'ski') {
+    keyboard = [
+      [{ text: 'Літо', callback_data: 'Summer' }],
+      [{ text: 'Зима', callback_data: 'Winter' }],
+    ];
+  } else {
+    keyboard = [
       [{ text: 'Баня', callback_data: 'option_bath' }],
       [{ text: 'Дощ', callback_data: 'option_rain' }],
       [{ text: 'Палатка', callback_data: 'option_tent' }],
       [{ text: 'GoPro', callback_data: 'option_gopro' }],
       [{ text: 'Завершити вибір', callback_data: 'next' }],
-    ]};
+    ];
+  }
+
+  if (type || duration || season) {
+    keyboard.push([{ text: '🔄 Скинути', callback_data: 'reset' }]);
+  }
+
+  return { inline_keyboard: keyboard };
 };
 
 bot.onText(/\/start/, async (msg) => {
@@ -86,6 +92,21 @@ bot.on('callback_query', async (query) => {
   const data = query.data;
 
   if (!userSelections[chatId]) return;
+
+  if (data === 'reset') {
+    try {
+      await bot.deleteMessage(chatId, userSelections[chatId].lastMessageId);
+    } catch (error) {
+      console.log("Помилка видалення повідомлення:", error);
+    }
+    userSelections[chatId] = {};
+    const msgResponse = await bot.sendMessage(chatId, "Виберіть тип подорожі:", {
+      reply_markup: getReplyMarkup(chatId),
+      parse_mode: 'Markdown'
+    });
+    userSelections[chatId].lastMessageId = msgResponse.message_id;
+    return;
+  }
 
   if (data.startsWith('option_')) {
     const option = data.replace('option_', '');
