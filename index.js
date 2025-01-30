@@ -6,9 +6,13 @@ const bot = new TelegramApi(process.env.BOT_TOKEN, { polling: true });
 
 const userSelections = {};
 
+bot.setMyCommands([
+  { command: '/start', description: 'Почати опитування' },
+]);
+
 const startSurvey = async (chatId) => {
   userSelections[chatId] = {};
-  await bot.sendMessage(chatId, 'Виберіть тип походу:', {
+  const msg = await bot.sendMessage(chatId, 'Виберіть тип походу:', {
     reply_markup: {
       inline_keyboard: [
         [{ text: 'Похід у гори', callback_data: 'hike' }],
@@ -18,6 +22,7 @@ const startSurvey = async (chatId) => {
       ],
     },
   });
+  userSelections[chatId].lastMessageId = msg.message_id;
 };
 
 bot.onText(/\/start/, async (msg) => {
@@ -38,12 +43,19 @@ function getOptionName(optionKey) {
 bot.on('callback_query', async (query) => {
   const chatId = query.message.chat.id;
   const data = query.data;
+  const lastMessageId = userSelections[chatId]?.lastMessageId;
 
   if (!userSelections[chatId]) return;
 
   if (!userSelections[chatId].type) {
     userSelections[chatId].type = data;
-    return bot.sendMessage(chatId, 'Виберіть тривалість походу:', {
+    await bot.editMessageText(`✅ Ви вибрали: ${query.message.text.split('\n')[0]}\n*${query.message.reply_markup.inline_keyboard.find(row => row[0].callback_data === data)[0].text}*`, {
+      chat_id: chatId,
+      message_id: lastMessageId,
+      parse_mode: 'Markdown',
+    });
+
+    const msg = await bot.sendMessage(chatId, 'Виберіть тривалість походу:', {
       reply_markup: {
         inline_keyboard: [
           [{ text: '1 день', callback_data: 'OneDay' }],
@@ -51,41 +63,61 @@ bot.on('callback_query', async (query) => {
         ],
       },
     });
+    userSelections[chatId].lastMessageId = msg.message_id;
+    return;
   }
 
-
-
   if (!userSelections[chatId].duration) {
-    userSelections[chatId].duration = data;
-    return bot.sendMessage(chatId, 'Виберіть пору року:', {
-      reply_markup: {
-        inline_keyboard: [
-          [{ text: 'Літо', callback_data: 'Summer' }],
-          [{ text: 'Зима', callback_data: 'Winter' }],
-        ],
-      },
-    });
+    if (['OneDay', 'TwoDays'].includes(data)) {
+      userSelections[chatId].duration = data;
+      await bot.editMessageText(`✅ Ви вибрали: ${query.message.text.split('\n')[0]}\n*${query.message.reply_markup.inline_keyboard.find(row => row[0].callback_data === data)[0].text}*`, {
+        chat_id: chatId,
+        message_id: lastMessageId,
+        parse_mode: 'Markdown',
+      });
+
+      const msg = await bot.sendMessage(chatId, 'Виберіть пору року:', {
+        reply_markup: {
+          inline_keyboard: [
+            [{ text: 'Літо', callback_data: 'Summer' }],
+            [{ text: 'Зима', callback_data: 'Winter' }],
+          ],
+        },
+      });
+      userSelections[chatId].lastMessageId = msg.message_id;
+    }
+    return;
   }
 
   if (!userSelections[chatId].season) {
-    userSelections[chatId].season = data;
-    return bot.sendMessage(chatId, 'Виберіть додаткові опції:', {
-      reply_markup: {
-        inline_keyboard: [
-          [{ text: 'Баня', callback_data: 'option_bath' }],
-          [{ text: 'Дощ', callback_data: 'option_rain' }],
-          [{ text: 'Палатка', callback_data: 'option_tent' }],
-          [{ text: 'GoPro', callback_data: 'option_gopro' }],
-          [{ text: 'Далі', callback_data: 'next' }],
-        ],
-      },
-    });
-  }
+    if (['Summer', 'Winter'].includes(data)) {
+      userSelections[chatId].season = data;
+      await bot.editMessageText(`✅ Ви вибрали: ${query.message.text.split('\n')[0]}\n*${query.message.reply_markup.inline_keyboard.find(row => row[0].callback_data === data)[0].text}*`, {
+        chat_id: chatId,
+        message_id: lastMessageId,
+        parse_mode: 'Markdown',
+      });
 
+      const msg = await bot.sendMessage(chatId, 'Виберіть додаткові опції:', {
+        reply_markup: {
+          inline_keyboard: [
+            [{ text: 'Баня', callback_data: 'option_bath' }],
+            [{ text: 'Дощ', callback_data: 'option_rain' }],
+            [{ text: 'Палатка', callback_data: 'option_tent' }],
+            [{ text: 'GoPro', callback_data: 'option_gopro' }],
+            [{ text: 'Далі', callback_data: 'next' }],
+          ],
+        },
+      });
+      userSelections[chatId].lastMessageId = msg.message_id;
+    }
+    return;
+  }
 
   if (data.startsWith('option_')) {
     const option = data.replace('option_', '');
     userSelections[chatId].options = userSelections[chatId].options || [];
+
     if (userSelections[chatId].options.includes(option)) {
       userSelections[chatId].options = userSelections[chatId].options.filter(o => o !== option);
     } else {
@@ -98,6 +130,7 @@ bot.on('callback_query', async (query) => {
     const { type, duration, season, options = [] } = userSelections[chatId];
     const packingList = getPackingList(type, duration, season);
     let message = `*${packingList.name}*\n`;
+
     ['kolya', 'diana', 'shared'].forEach(group => {
       if (packingList[group]) {
         message += `*${group === 'kolya' ? 'Коля:' : group === 'diana' ? 'Діана:' : 'Разом:'}*\n`;
@@ -118,6 +151,11 @@ bot.on('callback_query', async (query) => {
         }
       });
     }
+
+    await bot.editMessageText(`✅ Вибір завершено`, {
+      chat_id: chatId,
+      message_id: lastMessageId,
+    });
 
     await bot.sendMessage(chatId, message, { parse_mode: 'Markdown' });
     delete userSelections[chatId];
