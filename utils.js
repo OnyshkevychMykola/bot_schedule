@@ -26,13 +26,13 @@ function returnAnswer(type, duration, season, options) {
   ['kolya', 'diana', 'shared'].forEach(group => {
     if (packingList[group]) {
       message += `*${group === 'kolya' ? 'Коля:' : group === 'diana' ? 'Діана:' : 'Разом:'}*\n`;
-      message += Object.values(packingList[group]).map(item => `- ${item}`).join('\n') + '\n';
+      message += packingList[group].map(item => `- ${item}`).join('\n') + '\n';
     }
   });
 
   if (options.length > 0) {
     message += '\n*Додаткові опції:*\n' + options.map(optionKey => {
-      return additionalConditions[optionKey] ? `*${getOptionName(optionKey)}:*\n` + Object.values(additionalConditions[optionKey]).map(item => `- ${item}`).join('\n') : '';
+      return additionalConditions[optionKey] ? `*${getOptionName(optionKey)}:*\n` + additionalConditions[optionKey].map(item => `- ${item}`).join('\n') : '';
     }).join('\n');
   }
   return message;

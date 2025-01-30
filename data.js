@@ -1,442 +1,226 @@
+const SPARE_T_SHIRT = "Змінна футболка 1";
+const MEMBRANE_JACKET = "Мембранна куртка";
+const KNEE_PADS = "Наколінники";
+const KNIFE = "Ніж";
+const HAIRBRUSH = "Розчоска";
+const NAIL_FILE = "Пилочка";
+const PADS = "Прокладки";
+const POWERBANK = "Павербанк";
+const HEADPHONES = "Навушники";
+const CHARGERS = "Зарядки";
+const SPARE_SOCKS = "Змінна пара шкарпеток 1";
+const SKI_PANTS = "Лижні штани";
+const THERMAL_UNDERWEAR = "Термобілизна";
+const SWEATER = "Кофта";
+const PANTS = "Штани";
+const BELT = "Ремінь";
+const SOCKS = "Носки";
+const UNDERWEAR = "Труси";
+const SKI_JACKET = "Лижна Куртка";
+const GLOVES = "Рукавиці";
+const BALACLAVA = "Балаклава";
+const HAT = "Шапка";
+const HAND_GUARDS = "Захисти для рук 2";
+const BUTT_PADS = "Підсрачники 2";
+const DEODORANTS = "Дезодоранти 2";
+const MEDICINE_BAG = "Кульок з ліками";
+const PASSPORT = "Паспорт 2";
+const WATER = "Вода 0.5л";
+const COOKIES = "Пачка печива";
+const BAGS = "Кульки 5";
+const HOME_SHORTS = "Хатні шорти";
+const E_BOOK = "Електрона книга";
+const MAKEUP = "Мейк";
+const CREAM = "Крем";
+const SMALL_TOWEL = "Рушничок";
+const TOWEL = "Рушник";
+const SPARE_UNDERWEAR = "Змінна пара трусів 1";
+const HOME_T_SHIRT = "Хатня футболка";
+const HOME_PANTS = "Хатні штани";
+const HOME_SWEATER = "Хатня кофта";
+const TOOTHBRUSHES = "Зубні щітки 2";
+const TOOTHPASTE = "Зубна паста";
+const CONDOMS = "Презервативи";
+const SUNGLASSES = "Сонцезахисні окуляри";
+const CAP = "Кепка";
+const SUNSCREEN = "Сонцезахисний крем";
+const T_SHIRT = "Футболка";
+const PANTS_OR_SHORTS = "Штани/Шорти";
+const SWIMWEAR = "Плавки";
+const BOOTS = "Чоботи";
+const GALOSHES = "Галоші";
+const WAFFLES = "Вафлі 1п";
+const BALLOONS = "Кульки 3";
+const MEDICINE = "Ліки";
+const FLEECE = "Фліска";
+const SNEAKERS = "Кросівки";
+const CAP_OR_PANAMA = "Кепка/панама";
+
+const LARGE_BACKPACK = "Великий рюкзак";
+const TENT = "Палатка";
+const KARIMAT = "Каримат";
+const INFLATABLE_KARIMAT = "Надувний каримат";
+const SLEEPING_BAG = "Спальник";
+const TENT_RAIN_COVER = "Дощовик для палатки";
+const GAS_BURNER = "Газовий пальник";
+const BASIC_CYLINDER = "Базовий балон";
+const CAMPING_COOKWARE = "Набір похідного посуду";
+const FREEZE_DRIED_MEALS = "Сублімати";
+const LIGHTER = "Запальничка";
+const WET_WIPES = "Вологі серветки";
+const FLASHLIGHT = "Ліхтарик";
+
+const SWIMSUIT = "Плавки";
+const FLIP_FLOPS = "Шльопанці";
+
+const UMBRELLA = "Зонтік";
+const RAINCOAT = "Дощовик";
+
+const GOPRO = "Го про";
+const GOPRO_PROTECTION = "Захист го про";
+const GOPRO_CHARGER = "Зарядка го про";
+const GOPRO_MOUNT = "Кріплення го про";
+
 const tripPackingList = {
   skiOneDay: {
     name: "Лижі 1 день",
-    kolya: {
-      tShirt: "Змінна футболка 1",
-      membraneJacket: "Мембранна куртка",
-      kneePads: "Наколінники",
-      knife: "Ніж"
-    },
-    diana: {
-      hairbrush: "Розчоска",
-      nailFile: "Пилочка",
-      pads: "Прокладки"
-    },
-    shared: {
-      powerbank: "Павербанк",
-      headphones: "Навушники",
-      chargers: "Зарядки",
-      spareSocks: "Змінна пара шкарпеток 1",
-      skiPants: "Лижні штани",
-      thermalUnderwear: "Термобілизна",
-      sweater: "Кофта",
-      pants: "Штани",
-      belt: "Ремінь",
-      socks: "Носки",
-      underwear: "Труси",
-      skiJacket: "Лижна Куртка",
-      gloves: "Рукавиці",
-      balaclava: "Балаклава",
-      hat: "Шапка",
-      handGuards: "Захисти для рук 2",
-      buttPads: "Підсрачники 2",
-      deodorants: "Дезодоранти 2",
-      medicineBag: "Кульок з ліками",
-      passport: "Паспорт 2",
-      water: "Вода 0.5л",
-      cookies: "Пачка печива"
-    }
+    kolya: [SPARE_T_SHIRT, MEMBRANE_JACKET, KNEE_PADS, KNIFE],
+    diana: [HAIRBRUSH, NAIL_FILE, PADS],
+    shared: [
+      POWERBANK, HEADPHONES, CHARGERS, SPARE_SOCKS, SKI_PANTS,
+      THERMAL_UNDERWEAR, SWEATER, PANTS, BELT, SOCKS, UNDERWEAR,
+      SKI_JACKET, GLOVES, BALACLAVA, HAT, HAND_GUARDS, BUTT_PADS,
+      DEODORANTS, MEDICINE_BAG, PASSPORT, WATER, COOKIES
+    ]
   },
   skiTwoDays: {
     name: "Лижі 2 дні",
-    kolya: {
-      tShirt: "Змінна футболка 1",
-      membraneJacket: "Мембранна куртка",
-      kneePads: "Наколінники",
-      bags: "Кульки 5",
-      homeShorts: "Хатні шорти",
-      knife: "Ніж"
-    },
-    diana: {
-      hairbrush: "Розчоска",
-      nailFile: "Пилочка",
-      pads: "Прокладки",
-      eBook: "Електрона книга",
-      makeup: "Мейк",
-      cream: "Крем",
-      smallTowel: "Рушничок"
-    },
-    shared: {
-      powerbank: "Павербанк",
-      headphones: "Навушники",
-      chargers: "Зарядки",
-      towel: "Рушник",
-      spareSocks: "Змінна пара шкарпеток 1",
-      spareUnderwear: "Змінна пара трусів 1",
-      homeTShirt: "Хатня футболка",
-      homePants: "Хатні штани",
-      homeSweater: "Хатня кофта",
-      skiPants: "Лижні штани",
-      thermalUnderwear: "Термобілизна",
-      sweater: "Кофта",
-      pants: "Штани",
-      belt: "Ремінь",
-      socks: "Носки",
-      underwear: "Труси",
-      skiJacket: "Лижна Куртка",
-      gloves: "Рукавиці",
-      balaclava: "Балаклава",
-      hat: "Шапка",
-      handGuards: "Захисти для рук 2",
-      buttPads: "Підсрачники 2",
-      deodorants: "Дезодоранти 2",
-      medicineBag: "Кульок з ліками",
-      toothbrushes: "Зубні щітки 2",
-      toothpaste: "Зубна паста",
-      condoms: "Презервативи",
-      passport: "Паспорт 2",
-      water: "Вода 0.5л",
-      cookies: "Пачка печива"
-    }
+    kolya: [SPARE_T_SHIRT, MEMBRANE_JACKET, KNEE_PADS, BAGS, HOME_SHORTS, KNIFE],
+    diana: [HAIRBRUSH, NAIL_FILE, PADS, E_BOOK, MAKEUP, CREAM, SMALL_TOWEL],
+    shared: [
+      POWERBANK, HEADPHONES, CHARGERS, TOWEL, SPARE_SOCKS, SPARE_UNDERWEAR,
+      HOME_T_SHIRT, HOME_PANTS, HOME_SWEATER, SKI_PANTS, THERMAL_UNDERWEAR,
+      SWEATER, PANTS, BELT, SOCKS, UNDERWEAR, SKI_JACKET, GLOVES, BALACLAVA,
+      HAT, HAND_GUARDS, BUTT_PADS, DEODORANTS, MEDICINE_BAG, TOOTHBRUSHES,
+      TOOTHPASTE, CONDOMS, PASSPORT, WATER, COOKIES
+    ]
   },
   cityOneDayWinter: {
     name: "Місто 1 день Зима",
-    kolya: {
-      bags: "Кульки 5",
-      knife: "Ніж"
-    },
-    diana: {
-      nailFile: "Пилочка",
-      pads: "Прокладки"
-    },
-    shared: {
-      powerbank: "Павербанк",
-      headphones: "Навушники",
-      chargers: "Зарядки",
-      thermalUnderwear: "Термобілизна",
-      sweater: "Кофта",
-      pants: "Штани",
-      belt: "Ремінь",
-      socks: "Носки",
-      underwear: "Труси",
-      hat: "Шапка",
-      deodorants: "Дезодоранти 2",
-      medicineBag: "Кульок з ліками",
-      water: "Вода 0.5л",
-      cookies: "Пачка печива"
-    }
+    kolya: [BAGS, KNIFE],
+    diana: [NAIL_FILE, PADS],
+    shared: [
+      POWERBANK, HEADPHONES, CHARGERS, THERMAL_UNDERWEAR, SWEATER, PANTS,
+      BELT, SOCKS, UNDERWEAR, HAT, DEODORANTS, MEDICINE_BAG, WATER, COOKIES
+    ]
   },
   cityOneDaySummer: {
     name: "Місто 1 день Літо",
-    kolya: {
-      bags: "Кульки 5",
-      sunglasses: "Сонцезахисні окуляри",
-      knife: "Ніж"
-    },
-    diana: {
-      nailFile: "Пилочка",
-      pads: "Прокладки",
-      cap: "Кепка",
-      sunscreen: "Сонцезахисний крем"
-    },
-    shared: {
-      powerbank: "Павербанк",
-      headphones: "Навушники",
-      chargers: "Зарядки",
-      tShirt: "Футболка",
-      sweater: "Кофта",
-      pantsOrShorts: "Штани/Шорти",
-      socks: "Носки",
-      underwear: "Труси",
-      deodorants: "Дезодоранти 2",
-      medicineBag: "Кульок з ліками",
-      water: "Вода 0.5л",
-      cookies: "Пачка печива"
-    }
+    kolya: [BAGS, SUNGLASSES, KNIFE],
+    diana: [NAIL_FILE, PADS, CAP, SUNSCREEN],
+    shared: [
+      POWERBANK, HEADPHONES, CHARGERS, T_SHIRT, SWEATER, PANTS_OR_SHORTS,
+      SOCKS, UNDERWEAR, DEODORANTS, MEDICINE_BAG, WATER, COOKIES
+    ]
   },
   cityTwoDaysWinter: {
     name: "Місто 2 дні Зима",
-    kolya: {
-      spareTShirt: "Змінна футболка 1",
-      bags: "Кульки 5",
-      homeShorts: "Хатні шорти",
-      knife: "Ніж"
-    },
-    diana: {
-      hairbrush: "Розчоска",
-      nailFile: "Пилочка",
-      pads: "Прокладки",
-      eBook: "Електрона книга",
-      makeup: "Мейк",
-      cream: "Крем",
-      smallTowel: "Рушничок"
-    },
-    shared: {
-      powerbank: "Павербанк",
-      headphones: "Навушники",
-      chargers: "Зарядки",
-      spareSocks: "Змінна пара шкарпеток 1",
-      spareUnderwear: "Змінна пара трусів 1",
-      homeTShirt: "Хатня футболка",
-      homePants: "Хатні штани",
-      homeSweater: "Хатня кофта",
-      thermalUnderwear: "Термобілизна",
-      sweater: "Кофта",
-      pants: "Штани",
-      belt: "Ремінь",
-      socks: "Носки",
-      underwear: "Труси",
-      hat: "Шапка",
-      deodorants: "Дезодоранти 2",
-      medicineBag: "Кульок з ліками",
-      toothbrushes: "Зубні щітки 2",
-      toothpaste: "Зубна паста",
-      condoms: "Презервативи",
-      water: "Вода 0.5л",
-      cookies: "Пачка печива"
-    }
+    kolya: [SPARE_T_SHIRT, BAGS, HOME_SHORTS, KNIFE],
+    diana: [HAIRBRUSH, NAIL_FILE, PADS, E_BOOK, MAKEUP, CREAM, SMALL_TOWEL],
+    shared: [
+      POWERBANK, HEADPHONES, CHARGERS, SPARE_SOCKS, SPARE_UNDERWEAR,
+      HOME_T_SHIRT, HOME_PANTS, HOME_SWEATER, THERMAL_UNDERWEAR, SWEATER,
+      PANTS, BELT, SOCKS, UNDERWEAR, HAT, DEODORANTS, MEDICINE_BAG,
+      TOOTHBRUSHES, TOOTHPASTE, CONDOMS, WATER, COOKIES
+    ]
   },
   cityTwoDaysSummer: {
     name: "Місто 2 дні Літо",
-    kolya: {
-      spareTShirt: "Змінна футболка 1",
-      bags: "Кульки 5",
-      swimwear: "Плавки",
-      knife: "Ніж"
-    },
-    diana: {
-      hairbrush: "Розчоска",
-      nailFile: "Пилочка",
-      pads: "Прокладки",
-      eBook: "Електрона книга",
-      makeup: "Мейк",
-      cream: "Крем",
-      smallTowel: "Рушничок",
-      cap: "Кепка",
-      sunscreen: "Сонцезахисний крем"
-    },
-    shared: {
-      powerbank: "Павербанк",
-      headphones: "Навушники",
-      chargers: "Зарядки",
-      towel: "Рушник",
-      spareSocks: "Змінна пара шкарпеток 1",
-      spareUnderwear: "Змінна пара трусів 1",
-      homeTShirt: "Хатня футболка",
-      homePants: "Хатні штани",
-      homeSweater: "Хатня кофта",
-      sweater: "Кофта",
-      pantsOrShorts: "Штани/шорти",
-      belt: "Ремінь",
-      socks: "Носки",
-      underwear: "Труси",
-      hat: "Шапка",
-      deodorants: "Дезодоранти 2",
-      medicineBag: "Кульок з ліками",
-      toothbrushes: "Зубні щітки 2",
-      toothpaste: "Зубна паста",
-      condoms: "Презервативи",
-      water: "Вода 0.5л",
-      cookies: "Пачка печива"
-    }
+    kolya: [SPARE_T_SHIRT, BAGS, SWIMWEAR, KNIFE],
+    diana: [
+      HAIRBRUSH, NAIL_FILE, PADS, E_BOOK, MAKEUP, CREAM, SMALL_TOWEL, CAP, SUNSCREEN
+    ],
+    shared: [
+      POWERBANK, HEADPHONES, CHARGERS, TOWEL, SPARE_SOCKS, SPARE_UNDERWEAR,
+      HOME_T_SHIRT, HOME_PANTS, HOME_SWEATER, SWEATER, PANTS_OR_SHORTS, BELT,
+      SOCKS, UNDERWEAR, HAT, DEODORANTS, MEDICINE_BAG, TOOTHBRUSHES, TOOTHPASTE,
+      CONDOMS, WATER, COOKIES
+    ]
   },
   familyWinter: {
     name: "Поїздка до батьків Колі 2 дні Зима",
     kolya: {},
-    diana: {
-      hairbrush: "Розчоска",
-      nailFile: "Пилочка",
-      pads: "Прокладки",
-      eBook: "Електрона книга",
-      makeup: "Мейк",
-      cream: "Крем",
-      smallTowel: "Рушничок",
-      powerbank: "Павербанк",
-      spareSocks: "Змінна пара шкарпеток 1",
-      spareUnderwear: "Змінна пара трусів 1",
-      homeTShirt: "Хатня футболка",
-      homePants: "Хатні штани",
-      homeSweater: "Хатня кофта"
-    },
-    shared: {
-      headphones: "Навушники",
-      chargers: "Зарядки",
-      thermalUnderwear: "Термобілизна",
-      sweater: "Кофта",
-      pants: "Штани",
-      belt: "Ремінь",
-      socks: "Носки",
-      underwear: "Труси",
-      hat: "Шапка",
-      deodorants: "Дезодоранти 2",
-      condoms: "Презервативи"
-    }
+    diana: [
+      HAIRBRUSH, NAIL_FILE, PADS, E_BOOK, MAKEUP,
+      CREAM, SMALL_TOWEL, POWERBANK, SPARE_SOCKS,
+      SPARE_UNDERWEAR, HOME_T_SHIRT, HOME_PANTS, HOME_SWEATER
+    ],
+    shared: [HEADPHONES, CHARGERS, THERMAL_UNDERWEAR, SWEATER,
+      PANTS, BELT, SOCKS, UNDERWEAR, HAT, DEODORANTS, CONDOMS]
   },
   familySummer: {
     name: "Поїздка до батьків Колі 2 дні Літо",
     kolya: {},
-    diana: {
-      hairbrush: "Розчоска",
-      nailFile: "Пилочка",
-      pads: "Прокладки",
-      eBook: "Електрона книга",
-      makeup: "Мейк",
-      cream: "Крем",
-      smallTowel: "Рушничок",
-      powerbank: "Павербанк",
-      spareSocks: "Змінна пара шкарпеток 1",
-      spareUnderwear: "Змінна пара трусів 1",
-      homeTShirt: "Хатня футболка",
-      homePants: "Хатні штани",
-      homeSweater: "Хатня кофта",
-      cap: "Кепка",
-      sunscreen: "Сонцезахисний крем"
-    },
-    shared: {
-      headphones: "Навушники",
-      chargers: "Зарядки",
-      thermalUnderwear: "Термобілизна",
-      sweater: "Кофта",
-      pantsOrShorts: "Штани/шорти",
-      belt: "Ремінь",
-      socks: "Носки",
-      underwear: "Труси",
-      deodorants: "Дезодоранти 2",
-      condoms: "Презервативи"
-    }
+    diana: [
+      HAIRBRUSH, NAIL_FILE, PADS, E_BOOK, MAKEUP,
+      CREAM, SMALL_TOWEL, POWERBANK, SPARE_SOCKS,
+      SPARE_UNDERWEAR, HOME_T_SHIRT, HOME_PANTS, HOME_SWEATER, CAP, SUNSCREEN
+    ],
+    shared: [HEADPHONES, CHARGERS, THERMAL_UNDERWEAR, SWEATER,
+      PANTS, BELT, SOCKS, UNDERWEAR, HAT, DEODORANTS, CONDOMS]
   },
   hikeOneDayWinter: {
     name: "Похід в гори 1 день Зима",
-    kolya: {},
-    diana: {},
-    shared: {
-      powerbank: "Павербанк",
-      headphones: "Навушники",
-      knife: "Ніж",
-      thermalUnderwear: "Термобілизна",
-      deodorant: "Дезодорант",
-      underwear: "Труси 2",
-      socks: "Пара шкарпеток 2",
-      tShirt: "Футболка 1",
-      fleece: "Фліска",
-      skiPants: "Лижні штани",
-      belt: "Ремінь",
-      jacket: "Куртка",
-      membraneJacket: "Мембрана куртка",
-      gloves: "Рукавиці",
-      balaclava: "Балаклава",
-      hat: "Шапка",
-      boots: "Чоботи",
-      galoshes: "Галоші",
-      water: "Вода 2л",
-      waffles: "Вафлі 1п",
-      cookies: "Печиво 1п",
-      medicine: "Ліки",
-      balloons: "Кульки 3"
-    }
+    kolya: [],
+    diana: [],
+    shared: [
+      POWERBANK, HEADPHONES, KNIFE, THERMAL_UNDERWEAR, DEODORANTS,
+      UNDERWEAR, SOCKS, T_SHIRT, FLEECE, SKI_PANTS, BELT, SKI_JACKET,
+      MEMBRANE_JACKET, GLOVES, BALACLAVA, HAT, BOOTS, GALOSHES,
+      WATER, WAFFLES, COOKIES, MEDICINE, BALLOONS
+    ]
   },
   hikeOneDaySummer: {
     name: "Похід в гори 1 день Літо",
-    kolya: {},
-    diana: {},
-    shared: {
-      powerbank: "Павербанк",
-      headphones: "Навушники",
-      knife: "Ніж",
-      deodorant: "Дезодорант",
-      capOrPanama: "Кепка/панама",
-      underwear: "Труси 2",
-      socks: "Пара шкарпеток 2",
-      tShirt: "Футболка 1",
-      pants: "Штани",
-      belt: "Ремінь",
-      sweater: "Кофта",
-      sneakers: "Кросівки",
-      water: "Вода 2л",
-      waffles: "Вафлі 1п",
-      cookies: "Печиво 1п",
-      medicine: "Ліки",
-      balloons: "Кульки 3"
-    }
+    kolya: [],
+    diana: [],
+    shared: [
+      POWERBANK, HEADPHONES, KNIFE, DEODORANTS, CAP_OR_PANAMA,
+      UNDERWEAR, SOCKS, T_SHIRT, PANTS, BELT, SWEATER, SNEAKERS,
+      WATER, WAFFLES, COOKIES, MEDICINE, BALLOONS
+    ]
   },
   hikeTwoDaysWinter: {
     name: "Похід в гори 2 дні Зима",
-    kolya: {},
-    diana: {},
-    shared: {
-      powerbank: "Павербанк",
-      headphones: "Навушники",
-      knife: "Ніж",
-      thermalUnderwear: "Термобілизна",
-      deodorant: "Дезодорант",
-      underwear: "Труси 3",
-      socks: "Пара шкарпеток 3",
-      tShirt: "Футболка 2",
-      fleece: "Фліска",
-      skiPants: "Лижні штани",
-      belt: "Ремінь",
-      jacket: "Куртка",
-      membraneJacket: "Мембрана куртка",
-      gloves: "Рукавиці",
-      balaclava: "Балаклава",
-      hat: "Шапка",
-      boots: "Чоботи",
-      galoshes: "Галоші",
-      water: "Вода 4л",
-      waffles: "Вафлі 2п",
-      cookies: "Печиво 2п",
-      medicine: "Ліки",
-      balloons: "Кульки 5",
-      sneakers: "Кросівки"
-    }
+    kolya: [],
+    diana: [],
+    shared: [
+      POWERBANK, HEADPHONES, KNIFE, THERMAL_UNDERWEAR, DEODORANTS,
+      UNDERWEAR, SOCKS, T_SHIRT, FLEECE, SKI_PANTS, BELT, SKI_JACKET,
+      MEMBRANE_JACKET, GLOVES, BALACLAVA, HAT, BOOTS, GALOSHES,
+      WATER, WAFFLES, COOKIES, MEDICINE, BALLOONS, SNEAKERS
+    ]
   },
   hikeTwoDaysSummer: {
     name: "Похід в гори 2 дні Літо",
-    kolya: {},
-    diana: {},
-    shared: {
-      powerbank: "Павербанк",
-      headphones: "Навушники",
-      knife: "Ніж",
-      deodorant: "Дезодорант",
-      cap: "Кепка/панама",
-      underwear: "Труси 3",
-      socks: "Пара шкарпеток 3",
-      tShirt: "Футболка 2",
-      pants: "Штани",
-      belt: "Ремінь",
-      sweater: "Кофта",
-      sneakers: "Кросівки",
-      water: "Вода 4л",
-      waffles: "Вафлі 2п",
-      cookies: "Печиво 2п",
-      medicine: "Ліки",
-      balloons: "Кульки 5"
-    }
+    kolya: [],
+    diana: [],
+    shared: [
+      POWERBANK, HEADPHONES, KNIFE, DEODORANTS, CAP_OR_PANAMA,
+      UNDERWEAR, SOCKS, T_SHIRT, PANTS, BELT, SWEATER, SNEAKERS,
+      WATER, WAFFLES, COOKIES, MEDICINE, BALLOONS
+    ]
   }
 };
 
 const additionalConditions = {
-  tent: {
-    largeBackpack: "Великий рюкзак",
-    tent: "Палатка",
-    karimat: "Каримат",
-    inflatableKarimat: "Надувний каримат",
-    sleepingBag: "Спальник",
-    tentRainCover: "Дощовик для палатки",
-    gasBurner: "Газовий пальник",
-    basicCylinder: "Базовий балон",
-    campingCookware: "Набір похідного посуду",
-    freezeDriedMeals: "Сублімати",
-    lighter: "Запальничка",
-    wetWipes: "Вологі серветки",
-    flashlight: "Ліхтарик"
-  },
-  bath: {
-    swimsuit: "Плавки",
-    towel: "Рушник",
-    flipFlops: "Шльопанці"
-  },
-  rain: {
-    umbrella: "Зонтік",
-    raincoat: "Дощовик"
-  },
-  gopro: {
-    gopro: "Го про",
-    goproProtection: "Захист го про",
-    goproCharger: "Зарядка го про",
-    goproMount: "Кріплення го про"
-  }
+  tent: [ LARGE_BACKPACK, TENT, KARIMAT, INFLATABLE_KARIMAT, SLEEPING_BAG,
+    TENT_RAIN_COVER, GAS_BURNER, BASIC_CYLINDER,
+    CAMPING_COOKWARE, FREEZE_DRIED_MEALS, LIGHTER, WET_WIPES, FLASHLIGHT
+  ],
+  bath: [SWIMSUIT, TOWEL, FLIP_FLOPS],
+  rain: [UMBRELLA, RAINCOAT],
+  gopro: [GOPRO, GOPRO_PROTECTION, GOPRO_CHARGER, GOPRO_MOUNT]
 };
 
 module.exports = {
