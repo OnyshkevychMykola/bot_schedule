@@ -1,7 +1,8 @@
 require('dotenv').config();
 const TelegramApi = require('node-telegram-bot-api');
-const { tripPackingList, additionalConditions, optionNames } = require('./data');
-
+const { isUserAllowed, updateMessage, returnAnswer, dealWithData} = require('./utils');
+const { BUTTON_NAMES } = require('./constants');
+const { NEXT, RESET } = BUTTON_NAMES;
 const bot = new TelegramApi(process.env.BOT_TOKEN, { polling: true });
 
 const userSelections = {};
@@ -11,18 +12,9 @@ bot.setMyCommands([
   { command: '/start', description: 'Почати опитування' },
 ]);
 
-const isUserAllowed = (chatId) => allowedUsers.includes(chatId);
-
 const updateSurveyMessage = async (chatId) => {
   const { type, duration, season, options = [], lastMessageId } = userSelections[chatId];
-  let message = "*Ваш вибір:*";
-  if (type) message += `\n*Тип подорожі:* ${getOptionName(type)}`;
-  if (duration) message += `\n*Тривалість:* ${getOptionName(duration)}`;
-  if (season) message += `\n*Пора року:* ${getOptionName(season)}`;
-  if (options.length > 0) {
-    message += "\n*Додаткові опції:*\n" + options.map(opt => `- ${getOptionName(opt)}`).join('\n');
-  }
-
+  let message = updateMessage(type, duration, season, options);
   try {
     await bot.editMessageText(message, {
       chat_id: chatId,
@@ -75,7 +67,7 @@ const getReplyMarkup = (chatId) => {
 
 bot.onText(/\/start/, async (msg) => {
   const chatId = msg.chat.id;
-  if (!isUserAllowed(chatId)) {
+  if (!isUserAllowed(chatId, allowedUsers)) {
     return bot.sendMessage(chatId, "🚫 Вам заборонено користуватись цим ботом.");
   }
 
@@ -93,7 +85,7 @@ bot.on('callback_query', async (query) => {
 
   if (!userSelections[chatId]) return;
 
-  if (data === 'reset') {
+  if (data === RESET) {
     try {
       await bot.deleteMessage(chatId, userSelections[chatId].lastMessageId);
     } catch (error) {
@@ -117,23 +109,9 @@ bot.on('callback_query', async (query) => {
     } else {
       userSelections[chatId].options.push(option);
     }
-  } else if (data === 'next') {
+  } else if (data === NEXT) {
     const { type, duration, season, options = [] } = userSelections[chatId];
-    const packingList = tripPackingList[`${type}${duration || ''}${season || ''}`] || {};
-    let message = `*${packingList.name || 'Ваш список'}*\n\n`;
-
-    ['kolya', 'diana', 'shared'].forEach(group => {
-      if (packingList[group]) {
-        message += `*${group === 'kolya' ? 'Коля:' : group === 'diana' ? 'Діана:' : 'Разом:'}*\n`;
-        message += Object.values(packingList[group]).map(item => `- ${item}`).join('\n') + '\n';
-      }
-    });
-
-    if (options.length > 0) {
-      message += '\n*Додаткові опції:*\n' + options.map(optionKey => {
-        return additionalConditions[optionKey] ? `*${getOptionName(optionKey)}:*\n` + Object.values(additionalConditions[optionKey]).map(item => `- ${item}`).join('\n') : '';
-      }).join('\n');
-    }
+    let message = returnAnswer(type, duration, season, options);
 
     await bot.editMessageText(message, {
       chat_id: chatId,
@@ -143,18 +121,10 @@ bot.on('callback_query', async (query) => {
     delete userSelections[chatId];
     return;
   } else {
-    if (!userSelections[chatId].type) {
-      userSelections[chatId].type = data;
-    } else if (!userSelections[chatId].duration && userSelections[chatId].type !== 'family') {
-      userSelections[chatId].duration = data;
-    } else if (!userSelections[chatId].season && userSelections[chatId].type !== 'ski') {
-      userSelections[chatId].season = data;
-    }
+    dealWithData(userSelections, chatId, data);
   }
 
   await updateSurveyMessage(chatId);
 });
 
-function getOptionName(optionKey) {
-  return optionNames[optionKey] || optionKey;
-}
+
