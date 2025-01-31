@@ -1,44 +1,44 @@
-const SPARE_T_SHIRT = "Змінна футболка 1";
+const SPARE_T_SHIRT = "Змінна футболка";
 const MEMBRANE_JACKET = "Мембранна куртка";
 const KNEE_PADS = "Наколінники";
 const KNIFE = "Ніж";
-const HAIRBRUSH = "Розчоска";
+const HAIRBRUSH = "Гребінець";
 const NAIL_FILE = "Пилочка";
 const PADS = "Прокладки";
 const POWERBANK = "Павербанк";
 const HEADPHONES = "Навушники";
-const CHARGERS = "Зарядки";
-const SPARE_SOCKS = "Змінна пара шкарпеток 1";
+const CHARGERS = "Зарядка х2";
+const SPARE_SOCKS = "Змінна пара шкарпеток";
 const SKI_PANTS = "Лижні штани";
 const THERMAL_UNDERWEAR = "Термобілизна";
 const SWEATER = "Кофта";
 const PANTS = "Штани";
 const BELT = "Ремінь";
-const SOCKS = "Носки";
+const SOCKS = "Шкарпетки";
 const UNDERWEAR = "Труси";
 const SKI_JACKET = "Лижна Куртка";
 const GLOVES = "Рукавиці";
 const BALACLAVA = "Балаклава";
 const HAT = "Шапка";
-const HAND_GUARDS = "Захисти для рук 2";
-const BUTT_PADS = "Підсрачники 2";
-const DEODORANTS = "Дезодоранти 2";
-const MEDICINE_BAG = "Кульок з ліками";
-const PASSPORT = "Паспорт 2";
+const HAND_GUARDS = "Захисти для рук х2";
+const BUTT_PADS = "Похідне сидіння х2";
+const DEODORANTS = "Дезодоранти х2";
+const MEDICINE_BAG = "Пакет ліків";
+const PASSPORT = "Айді картка х2";
 const WATER = "Вода 0.5л";
 const COOKIES = "Пачка печива";
-const BAGS = "Кульки 5";
+const BAGS = "Пакети";
 const HOME_SHORTS = "Хатні шорти";
-const E_BOOK = "Електрона книга";
+const E_BOOK = "Електронна книга";
 const MAKEUP = "Мейк";
 const CREAM = "Крем";
 const SMALL_TOWEL = "Рушничок";
 const TOWEL = "Рушник";
-const SPARE_UNDERWEAR = "Змінна пара трусів 1";
+const SPARE_UNDERWEAR = "Змінна пара трусів";
 const HOME_T_SHIRT = "Хатня футболка";
 const HOME_PANTS = "Хатні штани";
 const HOME_SWEATER = "Хатня кофта";
-const TOOTHBRUSHES = "Зубні щітки 2";
+const TOOTHBRUSHES = "Зубні щітки х2";
 const TOOTHPASTE = "Зубна паста";
 const CONDOMS = "Презервативи";
 const SUNGLASSES = "Сонцезахисні окуляри";
@@ -50,13 +50,11 @@ const SWIMWEAR = "Плавки";
 const BOOTS = "Чоботи";
 const GALOSHES = "Галоші";
 const WAFFLES = "Вафлі 1п";
-const BALLOONS = "Кульки 3";
-const MEDICINE = "Ліки";
 const FLEECE = "Фліска";
 const SNEAKERS = "Кросівки";
 const CAP_OR_PANAMA = "Кепка/панама";
 
-const LARGE_BACKPACK = "Великий рюкзак";
+const LARGE_BACKPACK = "Великий похідний рюкзак";
 const TENT = "Палатка";
 const KARIMAT = "Каримат";
 const INFLATABLE_KARIMAT = "Надувний каримат";
@@ -71,9 +69,9 @@ const WET_WIPES = "Вологі серветки";
 const FLASHLIGHT = "Ліхтарик";
 
 const SWIMSUIT = "Плавки";
-const FLIP_FLOPS = "Шльопанці";
+const FLIP_FLOPS = "Шльопанці/крокси";
 
-const UMBRELLA = "Зонтік";
+const UMBRELLA = "Парасоля";
 const RAINCOAT = "Дощовик";
 
 const GOPRO = "Го про";
@@ -84,10 +82,10 @@ const GOPRO_MOUNT = "Кріплення го про";
 const tripPackingList = {
   skiOneDay: {
     name: "Лижі 1 день",
-    kolya: [SPARE_T_SHIRT, MEMBRANE_JACKET, KNEE_PADS, KNIFE],
+    kolya: [`${SPARE_T_SHIRT} х1`, MEMBRANE_JACKET, KNEE_PADS, KNIFE],
     diana: [HAIRBRUSH, NAIL_FILE, PADS],
     shared: [
-      POWERBANK, HEADPHONES, CHARGERS, SPARE_SOCKS, SKI_PANTS,
+      POWERBANK, HEADPHONES, CHARGERS, `${SPARE_SOCKS} х1`, SKI_PANTS,
       THERMAL_UNDERWEAR, SWEATER, PANTS, BELT, SOCKS, UNDERWEAR,
       SKI_JACKET, GLOVES, BALACLAVA, HAT, HAND_GUARDS, BUTT_PADS,
       DEODORANTS, MEDICINE_BAG, PASSPORT, WATER, COOKIES
@@ -95,10 +93,10 @@ const tripPackingList = {
   },
   skiTwoDays: {
     name: "Лижі 2 дні",
-    kolya: [SPARE_T_SHIRT, MEMBRANE_JACKET, KNEE_PADS, BAGS, HOME_SHORTS, KNIFE],
+    kolya: [`${SPARE_T_SHIRT} х2`, MEMBRANE_JACKET, KNEE_PADS, BAGS, HOME_SHORTS, KNIFE],
     diana: [HAIRBRUSH, NAIL_FILE, PADS, E_BOOK, MAKEUP, CREAM, SMALL_TOWEL],
     shared: [
-      POWERBANK, HEADPHONES, CHARGERS, TOWEL, SPARE_SOCKS, SPARE_UNDERWEAR,
+      POWERBANK, HEADPHONES, CHARGERS, TOWEL, `${SPARE_SOCKS} х2`, `${SPARE_UNDERWEAR} х2`,
       HOME_T_SHIRT, HOME_PANTS, HOME_SWEATER, SKI_PANTS, THERMAL_UNDERWEAR,
       SWEATER, PANTS, BELT, SOCKS, UNDERWEAR, SKI_JACKET, GLOVES, BALACLAVA,
       HAT, HAND_GUARDS, BUTT_PADS, DEODORANTS, MEDICINE_BAG, TOOTHBRUSHES,
@@ -125,10 +123,10 @@ const tripPackingList = {
   },
   cityTwoDaysWinter: {
     name: "Місто 2 дні Зима",
-    kolya: [SPARE_T_SHIRT, BAGS, HOME_SHORTS, KNIFE],
+    kolya: [`${SPARE_T_SHIRT} х2`, BAGS, HOME_SHORTS, KNIFE],
     diana: [HAIRBRUSH, NAIL_FILE, PADS, E_BOOK, MAKEUP, CREAM, SMALL_TOWEL],
     shared: [
-      POWERBANK, HEADPHONES, CHARGERS, SPARE_SOCKS, SPARE_UNDERWEAR,
+      POWERBANK, HEADPHONES, CHARGERS, `${SPARE_SOCKS} х2`, `${SPARE_UNDERWEAR} х2`,
       HOME_T_SHIRT, HOME_PANTS, HOME_SWEATER, THERMAL_UNDERWEAR, SWEATER,
       PANTS, BELT, SOCKS, UNDERWEAR, HAT, DEODORANTS, MEDICINE_BAG,
       TOOTHBRUSHES, TOOTHPASTE, CONDOMS, WATER, COOKIES
@@ -136,12 +134,12 @@ const tripPackingList = {
   },
   cityTwoDaysSummer: {
     name: "Місто 2 дні Літо",
-    kolya: [SPARE_T_SHIRT, BAGS, SWIMWEAR, KNIFE],
+    kolya: [`${SPARE_T_SHIRT} х2`, BAGS, SWIMWEAR, KNIFE],
     diana: [
       HAIRBRUSH, NAIL_FILE, PADS, E_BOOK, MAKEUP, CREAM, SMALL_TOWEL, CAP, SUNSCREEN
     ],
     shared: [
-      POWERBANK, HEADPHONES, CHARGERS, TOWEL, SPARE_SOCKS, SPARE_UNDERWEAR,
+      POWERBANK, HEADPHONES, CHARGERS, TOWEL, `${SPARE_SOCKS} х2`, `${SPARE_UNDERWEAR} х2`,
       HOME_T_SHIRT, HOME_PANTS, HOME_SWEATER, SWEATER, PANTS_OR_SHORTS, BELT,
       SOCKS, UNDERWEAR, HAT, DEODORANTS, MEDICINE_BAG, TOOTHBRUSHES, TOOTHPASTE,
       CONDOMS, WATER, COOKIES
@@ -152,8 +150,8 @@ const tripPackingList = {
     kolya: {},
     diana: [
       HAIRBRUSH, NAIL_FILE, PADS, E_BOOK, MAKEUP,
-      CREAM, SMALL_TOWEL, POWERBANK, SPARE_SOCKS,
-      SPARE_UNDERWEAR, HOME_T_SHIRT, HOME_PANTS, HOME_SWEATER
+      CREAM, SMALL_TOWEL, POWERBANK, `${SPARE_SOCKS} х2`,
+      `${SPARE_UNDERWEAR} х2`, HOME_T_SHIRT, HOME_PANTS, HOME_SWEATER
     ],
     shared: [HEADPHONES, CHARGERS, THERMAL_UNDERWEAR, SWEATER,
       PANTS, BELT, SOCKS, UNDERWEAR, HAT, DEODORANTS, CONDOMS]
@@ -163,8 +161,8 @@ const tripPackingList = {
     kolya: {},
     diana: [
       HAIRBRUSH, NAIL_FILE, PADS, E_BOOK, MAKEUP,
-      CREAM, SMALL_TOWEL, POWERBANK, SPARE_SOCKS,
-      SPARE_UNDERWEAR, HOME_T_SHIRT, HOME_PANTS, HOME_SWEATER, CAP, SUNSCREEN
+      CREAM, SMALL_TOWEL, POWERBANK, `${SPARE_SOCKS} х2`,
+      `${SPARE_UNDERWEAR} х2`, HOME_T_SHIRT, HOME_PANTS, HOME_SWEATER, CAP, SUNSCREEN
     ],
     shared: [HEADPHONES, CHARGERS, THERMAL_UNDERWEAR, SWEATER,
       PANTS, BELT, SOCKS, UNDERWEAR, HAT, DEODORANTS, CONDOMS]
@@ -177,7 +175,7 @@ const tripPackingList = {
       POWERBANK, HEADPHONES, KNIFE, THERMAL_UNDERWEAR, DEODORANTS,
       UNDERWEAR, SOCKS, T_SHIRT, FLEECE, SKI_PANTS, BELT, SKI_JACKET,
       MEMBRANE_JACKET, GLOVES, BALACLAVA, HAT, BOOTS, GALOSHES,
-      WATER, WAFFLES, COOKIES, MEDICINE, BALLOONS
+      WATER, WAFFLES, COOKIES, MEDICINE_BAG, BAGS
     ]
   },
   hikeOneDaySummer: {
@@ -187,7 +185,7 @@ const tripPackingList = {
     shared: [
       POWERBANK, HEADPHONES, KNIFE, DEODORANTS, CAP_OR_PANAMA,
       UNDERWEAR, SOCKS, T_SHIRT, PANTS, BELT, SWEATER, SNEAKERS,
-      WATER, WAFFLES, COOKIES, MEDICINE, BALLOONS
+      WATER, WAFFLES, COOKIES, MEDICINE_BAG, BAGS
     ]
   },
   hikeTwoDaysWinter: {
@@ -198,7 +196,7 @@ const tripPackingList = {
       POWERBANK, HEADPHONES, KNIFE, THERMAL_UNDERWEAR, DEODORANTS,
       UNDERWEAR, SOCKS, T_SHIRT, FLEECE, SKI_PANTS, BELT, SKI_JACKET,
       MEMBRANE_JACKET, GLOVES, BALACLAVA, HAT, BOOTS, GALOSHES,
-      WATER, WAFFLES, COOKIES, MEDICINE, BALLOONS, SNEAKERS
+      WATER, WAFFLES, COOKIES, MEDICINE_BAG, BAGS, SNEAKERS
     ]
   },
   hikeTwoDaysSummer: {
@@ -208,7 +206,7 @@ const tripPackingList = {
     shared: [
       POWERBANK, HEADPHONES, KNIFE, DEODORANTS, CAP_OR_PANAMA,
       UNDERWEAR, SOCKS, T_SHIRT, PANTS, BELT, SWEATER, SNEAKERS,
-      WATER, WAFFLES, COOKIES, MEDICINE, BALLOONS
+      WATER, WAFFLES, COOKIES, MEDICINE_BAG, BAGS
     ]
   }
 };
