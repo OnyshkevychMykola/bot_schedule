@@ -3,7 +3,7 @@ const TelegramApi = require('node-telegram-bot-api');
 const { isUserAllowed, updateMessage, returnAnswer, dealWithData} = require('./utils');
 const { BUTTON_NAMES } = require('./constants');
 const { NEXT, RESET } = BUTTON_NAMES;
-const bot = new TelegramApi(process.env.BOT_TOKEN, { polling: true });
+const bot = new TelegramApi(process.env.BOT_TOKEN, { polling: { interval: 1000, onlyFirstInstance: true } });
 
 const userSelections = {};
 const allowedUsers = process.env.ALLOWED_USERS.split(',').map(id => Number(id.trim()));
@@ -127,4 +127,15 @@ bot.on('callback_query', async (query) => {
   await updateSurveyMessage(chatId);
 });
 
+const express = require('express');
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+app.get('/', (req, res) => {
+  res.send('Telegram bot is running.');
+});
+
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
 
