@@ -147,7 +147,7 @@ const tripPackingList = {
   },
   familyWinter: {
     name: "Поїздка до батьків Колі 2 дні Зима",
-    kolya: {},
+    kolya: [],
     diana: [
       HAIRBRUSH, NAIL_FILE, PADS, E_BOOK, MAKEUP,
       CREAM, SMALL_TOWEL, POWERBANK, `${SPARE_SOCKS} х2`,
@@ -158,7 +158,7 @@ const tripPackingList = {
   },
   familySummer: {
     name: "Поїздка до батьків Колі 2 дні Літо",
-    kolya: {},
+    kolya: [],
     diana: [
       HAIRBRUSH, NAIL_FILE, PADS, E_BOOK, MAKEUP,
       CREAM, SMALL_TOWEL, POWERBANK, `${SPARE_SOCKS} х2`,
